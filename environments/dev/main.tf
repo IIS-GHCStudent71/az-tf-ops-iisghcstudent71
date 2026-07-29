@@ -137,7 +137,7 @@ resource "azurerm_storage_account" "orders" {
   tags = azurerm_resource_group.orders.tags
 }
 
-resource "azurerm_storage_container" "data" {
+resource "azurerm_storage_container" "orders_data" {
   name                  = "orders-data"
   storage_account_id    = azurerm_storage_account.orders.id
   container_access_type = "private"
