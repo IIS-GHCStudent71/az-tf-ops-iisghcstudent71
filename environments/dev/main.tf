@@ -115,7 +115,7 @@ resource "azurerm_linux_virtual_machine" "app" {
   size                = var.vm_size
 
   admin_username                  = var.vm_admin_username
-  admin_password                  = var.vm_admin_password
+  admin_password                  = data.azurerm_key_vault_secret.vm_admin_password.value
   disable_password_authentication = false
 
   network_interface_ids = [
@@ -156,4 +156,16 @@ resource "azurerm_storage_container" "this" {
   name                  = each.key
   storage_account_id    = azurerm_storage_account.orders.id
   container_access_type = each.value.access_type
+}
+
+# Look up the vault. Terraform does not manage it; the security team does.
+data "azurerm_key_vault" "orders" {
+  name                = var.key_vault_name
+  resource_group_name = var.key_vault_resource_group_name
+}
+
+# Read the secret out of it, at plan and apply time, every run.
+data "azurerm_key_vault_secret" "vm_admin_password" {
+  name         = "vm-admin-password"
+  key_vault_id = data.azurerm_key_vault.orders.id
 }

@@ -43,12 +43,6 @@ variable "vm_size" {
   default     = "Standard_D2als_v7"
 }
 
-variable "vm_admin_password" {
-  description = "Admin password for the production VM. Supplied at run time."
-  type        = string
-  sensitive   = true
-}
-
 variable "allowed_ssh_source" {
   description = "The one public IP allowed to reach the VM on port 22, in CIDR form."
   type        = string
@@ -68,4 +62,15 @@ variable "storage_replication_type" {
   description = "Redundancy for the production storage account. Requires storage module v1.1.0 or later."
   type        = string
   default     = "LRS"
+}
+
+variable "key_vault_name" {
+  description = "Name of the Key Vault holding this environment's secrets."
+  type        = string
+}
+
+variable "key_vault_resource_group_name" {
+  description = "Resource group containing the Key Vault. Owned by the security team."
+  type        = string
+  default     = "rg-summit-security"
 }
