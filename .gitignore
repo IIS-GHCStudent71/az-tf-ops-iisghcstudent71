@@ -23,5 +23,3 @@ generated*.tf
 # versions so every teammate and the pipeline resolve the same ones.
 
 .DS_Store
-
-#yo
